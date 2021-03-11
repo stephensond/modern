@@ -33,7 +33,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   callAPI() {
-    fetch("http://localhost:9000/all")
+    fetch("https://modern-fantasy.herokuapp.com/all")
       .then(res => res.json())
       .then(json => this.setState({ apiResponse: json }));
   }
@@ -50,7 +50,7 @@ class App extends React.Component<IProps, IState> {
       },
       body: JSON.stringify({ isDrafted: false })
     };
-    fetch('http://localhost:9000/newDraft', requestOptions)
+    fetch('https://modern-fantasy.herokuapp.com/newDraft', requestOptions)
       .then(res => res.text())
       .then(text => console.log('New Draft! All players undrafted.'))
       .catch(error => console.log(error))

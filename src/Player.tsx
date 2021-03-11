@@ -36,7 +36,7 @@ class Player extends React.Component<IProps, IState> {
             },
             body: JSON.stringify({ id: this.props.info.playerid, team : this.props.team}),
         };
-        fetch("http://localhost:9000/draft", requestOptions)
+        fetch("https://modern-fantasy.herokuapp.com/draft", requestOptions)
             .then(res => res.text())
             .then(text => console.log('Updated player with id ' + text))
             .catch(error => console.log(error));
