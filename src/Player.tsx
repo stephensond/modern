@@ -42,7 +42,7 @@ class Player extends React.Component<IProps, IState> {
         this.setState({
             isDrafted: !currentIsDrafted,
         })
-        this.props.draft(this.props.info.playerid);
+        this.props.draft(this.props.info.playername);
     }
 
 

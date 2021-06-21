@@ -57,7 +57,7 @@ class App extends React.Component<IProps, IState> {
     window.location.reload()
   }
 
-  draft(player) {
+  draft(player : string) {
     let picker = this.state.onClock
     let currentDraft = this.state.results;
     if (currentDraft[picker] === undefined) {
@@ -69,6 +69,9 @@ class App extends React.Component<IProps, IState> {
       results : currentDraft,
       pick : this.state.pick + 1
     })
+
+    // check that draft is getting stored
+    console.log(this.state.results)
 
     // increment the pick counter
     if (this.state.pick <= this.state.players * this.state.teams) {
