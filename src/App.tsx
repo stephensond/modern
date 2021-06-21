@@ -33,7 +33,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   callAPI() {
-    fetch("https://modern-fantasy.herokuapp.com/all")
+    fetch("http://localhost:9000/all")
       .then(res => res.json())
       .then(json => this.setState({ apiResponse: json }));
   }
@@ -50,7 +50,7 @@ class App extends React.Component<IProps, IState> {
       },
       body: JSON.stringify({ isDrafted: false })
     };
-    fetch('https://modern-fantasy.herokuapp.com/newDraft', requestOptions)
+    fetch('http://localhost:9000/newDraft', requestOptions)
       .then(res => res.text())
       .then(text => console.log('New Draft! All players undrafted.'))
       .catch(error => console.log(error))
@@ -58,14 +58,19 @@ class App extends React.Component<IProps, IState> {
   }
 
   draft(player) {
-    let results = this.state.results[this.state.onClock];
-    if (!results) {
-      this.state.results[this.state.onClock] = [];
+    let picker = this.state.onClock
+    let currentDraft = this.state.results;
+    if (currentDraft[picker] === undefined) {
+      currentDraft[picker] = [player]
     } else {
-      this.state.results[this.state.onClock].push(player)
+      currentDraft[picker].push(player)
     }
-    this.setState({pick : this.state.pick + 1})
+    this.setState({
+      results : currentDraft,
+      pick : this.state.pick + 1
+    })
 
+    // increment the pick counter
     if (this.state.pick <= this.state.players * this.state.teams) {
       if (this.state.pick % this.state.teams === 0) {
         this.setState({ up: !this.state.up })
@@ -78,8 +83,6 @@ class App extends React.Component<IProps, IState> {
       }
     }
   }
-
-
 
 
   render() {
