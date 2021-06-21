@@ -23,7 +23,7 @@ class App extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       apiResponse: [],
-      onClock: 2,
+      onClock: 1,
       up: true,
       pick: 1,
       teams: 4,
