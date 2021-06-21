@@ -1,7 +1,6 @@
 import React from 'react';
 import PlayerInfo from './PlayerInfo';
 import "./App.css"
-import App from './App'
 
 interface IProps {
     key: number;
