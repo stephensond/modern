@@ -29,7 +29,7 @@ class App extends React.Component<IProps, IState> {
       pick: 1,
       teams: 4,
       teamIDs: {},
-      players: 16,
+      players: 3,
       results: {}
     }
   }
@@ -71,19 +71,34 @@ class App extends React.Component<IProps, IState> {
     console.log(this.state.results)
 
     // increment the pick counter
-    if (this.state.pick <= this.state.players * this.state.teams) {
-      if (this.state.pick % this.state.teams === 0) {
-        this.setState({ up: !this.state.up })
-      }
-      else if (this.state.up) {
-        this.setState({ onClock: this.state.onClock + 1 })
-      }
-      else {
-        this.setState({ onClock: this.state.onClock - 1 })
-      }
+
+    if (this.state.pick % this.state.teams === 0) {
+      this.setState({ up: !this.state.up })
+    }
+    else if (this.state.up) {
+      this.setState({ onClock: this.state.onClock + 1 })
+    }
+    else {
+      this.setState({ onClock: this.state.onClock - 1 })
+    }
+    
+    if (this.state.pick === this.state.players * this.state.teams) {
+      this.endDraft()
     }
   }
 
+  endDraft() {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.results)
+    };
+    fetch('https://modern-fantasy.herokuapp.com/endDraft', requestOptions)
+    .then(res => res.text)
+    .catch(error => console.log(error))
+  }
 
   render() {
 
