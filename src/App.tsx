@@ -1,133 +1,106 @@
-import React from 'react';
-import './App.css';
-import Player from './Player';
-import PlayerInfo from './PlayerInfo';
-import Header from './Header'
+import React, { useState, useEffect, ReactElement } from "react";
+import "./App.css";
+import Player from "./Player";
+import PlayerInfo from "./PlayerInfo";
+import Header from "./Header";
 
-interface IProps {
-}
+export default function App(): ReactElement {
+  const [apiResponse, setapiResponse] = useState([]);
+  const [onClock, setOnClock] = useState(0);
+  const [up, setUp] = useState(true);
+  const [pick, setPick] = useState(1);
+  const [teams, setTeams] = useState(4);
+  const [teamIds, setTeamIds] = useState({});
+  const [players, setPlayers] = useState(3);
+  const [results, setResults] = useState({});
 
-interface IState {
-  apiResponse: PlayerInfo[];
-  onClock: number;
-  up: boolean;
-  pick: number;
-  teams: number;
-  teamIDs: object;
-  players: number;
-  results: object;
-}
-
-class App extends React.Component<IProps, IState> {
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      apiResponse: [],
-      onClock: 0,
-      up: true,
-      pick: 1,
-      teams: 4,
-      teamIDs: {},
-      players: 3,
-      results: {}
-    }
-  }
-
-  callAPI() {
+  useEffect(() => {
     fetch("https://modern-fantasy.herokuapp.com/all")
-      .then(res => res.json())
-      .then(json => this.setState({ apiResponse: json }));
-  }
+      .then((res) => res.json())
+      .then((json) => setapiResponse(json));
+  }, []);
 
-  componentDidMount() {
-    this.callAPI();
-  }
+  const newDraft = () => {
+    fetch("https://modern-fantasy.herokuapp.com/newDraft")
+      .then((res) => res.json())
+      .then((json) => json.map((x) => x["teamid"]))
+      .then((arr) => Object.assign({}, arr))
+      .then((nextjson) => {
+        setTeams(Object.keys(nextjson).length);
+        setTeamIds(nextjson);
+      })
+      .catch((error) => console.log(error));
+  };
 
-  newDraft() {
-    fetch('https://modern-fantasy.herokuapp.com/newDraft')
-      .then(res => res.json())
-      .then(json => json.map(x => x['teamid']))
-      .then(arr => Object.assign({}, arr))
-      .then(nextjson => this.setState({ teams : Object.keys(nextjson).length,
-                                        teamIDs : nextjson}) )
-      .catch(error => console.log(error))
-  }
+  const endDraft = () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(results),
+    };
+    fetch("https://modern-fantasy.herokuapp.com/endDraft", requestOptions)
+      .then((res) => res.text)
+      .catch((error) => console.log(error));
+  };
 
-  draft(player : string) {
-    let picker = this.state.teamIDs[this.state.onClock]
-    let currentDraft = this.state.results;
+  const draft = (player: string) => {
+    let picker = teamIds[onClock];
+    let currentDraft = results;
     if (currentDraft[picker] === undefined) {
-      currentDraft[picker] = [player]
+      currentDraft[picker] = [player];
     } else {
-      currentDraft[picker].push(player)
+      currentDraft[picker].push(player);
     }
-    this.setState({
-      results : currentDraft,
-      pick : this.state.pick + 1
-    })
+    setResults(currentDraft);
+    setPick(pick + 1);
 
     // check that draft is getting stored
-    console.log(this.state.results)
+    console.log(results);
 
     // increment the pick counter
-
-    if (this.state.pick % this.state.teams === 0) {
-      this.setState({ up: !this.state.up })
+    if (pick % teams === 0) {
+      setUp(!up);
+    } else if (up) {
+      setOnClock(onClock + 1);
+    } else {
+      setOnClock(onClock - 1);
     }
-    else if (this.state.up) {
-      this.setState({ onClock: this.state.onClock + 1 })
+    if (pick === players * teams) {
+      endDraft();
     }
-    else {
-      this.setState({ onClock: this.state.onClock - 1 })
-    }
-    
-    if (this.state.pick === this.state.players * this.state.teams) {
-      this.endDraft()
-    }
-  }
-
-  endDraft() {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state.results)
-    };
-    fetch('https://modern-fantasy.herokuapp.com/endDraft', requestOptions)
-    .then(res => res.text)
-    .catch(error => console.log(error))
-  }
-
-  render() {
-
-    const sortedList: PlayerInfo[] = this.state.apiResponse.sort(
-      function (a: PlayerInfo, b: PlayerInfo) { return a.playerid - b.playerid });
-
-    return (
-      <div className="App">
-        <Header onClick={() => this.newDraft()} />
-        <h1>Pick{this.state.pick}, team{this.state.onClock + 1} on clock</h1>
-        <table className="table">
-          <tbody>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Team</th>
-              <th>College</th>
-              <th>Draft</th>
-            </tr>
-            {sortedList.map((value: PlayerInfo, index: number) => {
-              return <Player key={index} info={value} draft={this.draft.bind(this)} 
-                             team={this.state.onClock}/>
-            })}
-          </tbody>
-        </table>
-      </div>
-    )
   };
-}
 
-export default App;
+  const sortedList: PlayerInfo[] = apiResponse.sort(
+    (a: PlayerInfo, b: PlayerInfo) => {
+      return a.playerid - b.playerid;
+    }
+  );
+
+  return (
+    <div className="App">
+      <Header onClick={newDraft} />
+      <h1>
+        Pick{pick}, team{onClock + 1} on clock
+      </h1>
+      <table className="table">
+        <tbody>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Team</th>
+            <th>College</th>
+            <th>Draft</th>
+          </tr>
+          {sortedList.map((value: PlayerInfo, index: number) => {
+            return (
+              <Player key={index} info={value} draft={draft} team={onClock} />
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
