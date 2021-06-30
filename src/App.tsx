@@ -81,8 +81,7 @@ export default function App(): ReactElement {
       body: JSON.stringify({'username' : 'Alex', 'pass' : 'bunga'}),
     };
     fetch("https://modern-fantasy.herokuapp.com/addUser", requestOptions)
-      .then((res) => res.text)
-      .then(txt => alert(txt))
+      .then((res) => alert(res.text))
       .catch((error) => console.log(error));
   }
 
