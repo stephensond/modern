@@ -72,6 +72,20 @@ export default function App(): ReactElement {
     }
   };
 
+  const test = () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({'username' : 'Alex', 'pass' : 'bunga'}),
+    };
+    fetch("https://modern-fantasy.herokuapp.com/addUser", requestOptions)
+      .then((res) => res.text)
+      .then(txt => alert(txt))
+      .catch((error) => console.log(error));
+  }
+
   const sortedList: PlayerInfo[] = apiResponse.sort(
     (a: PlayerInfo, b: PlayerInfo) => {
       return a.playerid - b.playerid;
@@ -83,6 +97,7 @@ export default function App(): ReactElement {
       <Header onClick={newDraft} />
       <h1>
         Pick{pick}, team{onClock + 1} on clock
+        <button className='test' onClick = {test}>test</button>
       </h1>
       <table className="table">
         <tbody>
