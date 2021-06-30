@@ -3,6 +3,7 @@ import "./App.css";
 import Player from "./Player";
 import PlayerInfo from "./PlayerInfo";
 import Header from "./Header";
+import Login from "./Login"
 
 export default function App(): ReactElement {
   const [apiResponse, setapiResponse] = useState([]);
@@ -72,21 +73,6 @@ export default function App(): ReactElement {
     }
   };
 
-  const test = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({'username' : 'Alex', 'pass' : 'bunga'}),
-    };
-    fetch("https://modern-fantasy.herokuapp.com/addUser", requestOptions)
-      .then((res) => res.status)
-      .then((status) => {if (status === 200) {alert('Account created')}
-                         else if (status === 400) {alert('Username taken')}})
-      .catch((error) => console.log(error));
-  }
-
   const sortedList: PlayerInfo[] = apiResponse.sort(
     (a: PlayerInfo, b: PlayerInfo) => {
       return a.playerid - b.playerid;
@@ -96,9 +82,9 @@ export default function App(): ReactElement {
   return (
     <div className="App">
       <Header onClick={newDraft} />
+      <Login />
       <h1>
         Pick{pick}, team{onClock + 1} on clock
-        <button className='test' onClick = {test}>test</button>
       </h1>
       <table className="table">
         <tbody>
