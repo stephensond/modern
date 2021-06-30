@@ -81,8 +81,9 @@ export default function App(): ReactElement {
       body: JSON.stringify({'username' : 'Alex', 'pass' : 'bunga'}),
     };
     fetch("https://modern-fantasy.herokuapp.com/addUser", requestOptions)
-      .then((res) => res.text())
-      .then((txt) => alert(txt))
+      .then((res) => res.status)
+      .then((status) => {if (status === 200) {alert('Account created')}
+                         else if (status === 400) {alert('Username taken')}})
       .catch((error) => console.log(error));
   }
 
