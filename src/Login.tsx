@@ -42,7 +42,6 @@ export default function Login(): ReactElement {
         Password:
         <input type="text" onChange={updatePass} />
       </label>
-      <input type="submit" value="Submit" />
       <button onClick={addUser} className="createUser">
         Submit
       </button>
