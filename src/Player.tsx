@@ -1,74 +1,54 @@
-import React from 'react';
-import PlayerInfo from './PlayerInfo';
-import "./App.css"
+import React, { ReactElement, useState } from "react";
+import PlayerInfo from "./PlayerInfo";
+import "./App.css";
 
-interface IProps {
-    key: number;
-    info: PlayerInfo;
-    draft: any;
-    team : number;
+interface PlayerProps {
+  key: number;
+  info: PlayerInfo;
+  draft: any;
+  team: number;
 }
 
-interface IState {
-    isDrafted: boolean;
+export default function Player(props: PlayerProps): ReactElement {
+  const [isDrafted, setIsDrafted] = useState(props.info.isdrafted);
+
+  const callAPI = () => {
+    // I don't think this API call is doing anything significant at this point
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: props.info.playerid, team: props.team }),
+    };
+    fetch("https://modern-fantasy.herokuapp.com/draft", requestOptions)
+      .then((res) => res.text())
+      .then((text) => console.log("Updated player with id " + text))
+      .catch((error) => console.log(error));
+    setIsDrafted(!isDrafted);
+    props.draft(props.info.playername);
+  };
+
+  let text = "Draft";
+  let check = "";
+  if (isDrafted) {
+    text = "Undo";
+    check = "✓";
+  }
+  let buttonclass = "button " + text;
+  return (
+    <tr className="playerRow">
+      <td>{props.info.playerid}</td>
+      <td>{props.info.playername}</td>
+      <td>{props.info.pos}</td>
+      <td>{props.info.team}</td>
+      <td>{props.info.school}</td>
+      <td>
+        <button onClick={callAPI} className={buttonclass}>
+          {text}
+        </button>
+      </td>
+      <td>{check}</td>
+    </tr>
+  );
 }
-
-class Player extends React.Component<IProps, IState> {
-
-    constructor(props: IProps) {
-        super(props);
-        this.state = { isDrafted: this.props.info.isdrafted };
-    }
-
-    // componentDidMount() {
-    //     fetch("http://localhost:9000/" + this.props.info.playerid)
-    //         .then(res => res.json())
-    //         .then(json => this.setState({ isDrafted: json.isdrafted }));
-    // }
-
-    callAPI() {
-        const currentIsDrafted: boolean = this.state.isDrafted;
-        const requestOptions = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({ id: this.props.info.playerid, team : this.props.team}),
-        };
-        fetch("https://modern-fantasy.herokuapp.com/draft", requestOptions)
-            .then(res => res.text())
-            .then(text => console.log('Updated player with id ' + text))
-            .catch(error => console.log(error));
-        this.setState({
-            isDrafted: !currentIsDrafted,
-        })
-        this.props.draft(this.props.info.playername);
-    }
-
-
-    render() {
-
-        let text = "Draft";
-        let check = "";
-        if (this.state.isDrafted) {
-            text = "Undo";
-            check = "✓";
-        }
-        let buttonclass = "button " + text
-        return <tr className="playerRow">
-            <td>{this.props.info.playerid}</td>
-            <td>{this.props.info.playername}</td>
-            <td>{this.props.info.pos}</td>
-            <td>{this.props.info.team}</td>
-            <td>{this.props.info.school}</td>
-            <td><button
-                onClick={() => this.callAPI()}
-                className={buttonclass}
-            >{text}</button></td>
-            <td>{check}</td>
-        </tr>
-    }
-
-}
-
-export default Player;
