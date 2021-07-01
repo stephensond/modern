@@ -12,7 +12,7 @@ export default function NewUser(): ReactElement {
       },
       body: JSON.stringify({ username: username, pass: pass }),
     };
-    fetch("https://modern-fantasy.herokuapp.com/addUser", requestOptions)
+    fetch(process.env.REACT_APP_API + "/addUser", requestOptions)
       .then((res) => res.status)
       .then((status) => {
         if (status === 200) {

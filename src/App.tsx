@@ -17,13 +17,13 @@ export default function App(): ReactElement {
   const [results, setResults] = useState({});
 
   useEffect(() => {
-    fetch("https://modern-fantasy.herokuapp.com/all")
+    fetch(process.env.REACT_APP_API + "/all")
       .then((res) => res.json())
       .then((json) => setapiResponse(json));
   }, []);
 
   const newDraft = () => {
-    fetch("https://modern-fantasy.herokuapp.com/newDraft")
+    fetch(process.env.REACT_APP_API + "/newDraft")
       .then((res) => res.json())
       .then((json) => json.map((x) => x["teamid"]))
       .then((arr) => Object.assign({}, arr))
@@ -42,7 +42,7 @@ export default function App(): ReactElement {
       },
       body: JSON.stringify(results),
     };
-    fetch("https://modern-fantasy.herokuapp.com/endDraft", requestOptions)
+    fetch(process.env.REACT_APP_API + "/endDraft", requestOptions)
       .then((res) => res.text)
       .catch((error) => console.log(error));
   };

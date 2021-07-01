@@ -12,7 +12,7 @@ export default function Login(): ReactElement {
       },
       body: JSON.stringify({ username: username, pass: pass }),
     };
-    fetch("https://modern-fantasy.herokuapp.com/login", requestOptions)
+    fetch(process.env.REACT_APP_API + "/login", requestOptions)
       .then((res) => res.status)
       .then((status) => {(status === 200) ? alert('Welcome back!') 
                                           : alert('Incorrect username/password')})
