@@ -3,6 +3,7 @@ import "./App.css";
 import Player from "./Player";
 import PlayerInfo from "./PlayerInfo";
 import Header from "./Header";
+import NewUser from "./NewUser"
 import Login from "./Login"
 
 export default function App(): ReactElement {
@@ -82,6 +83,7 @@ export default function App(): ReactElement {
   return (
     <div className="App">
       <Header onClick={newDraft} />
+      <NewUser />
       <Login />
       <h1>
         Pick{pick}, team{onClock + 1} on clock
