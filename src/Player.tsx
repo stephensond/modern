@@ -21,7 +21,7 @@ export default function Player(props: PlayerProps): ReactElement {
       },
       body: JSON.stringify({ id: props.info.playerid, team: props.team }),
     };
-    fetch("https://modern-fantasy.herokuapp.com/draft", requestOptions)
+    fetch(process.env.REACT_APP_API + "/draft", requestOptions)
       .then((res) => res.text())
       .then((text) => console.log("Updated player with id " + text))
       .catch((error) => console.log(error));
