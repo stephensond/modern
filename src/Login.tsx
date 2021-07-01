@@ -15,9 +15,8 @@ export default function Login(): ReactElement {
       body: JSON.stringify({ username: username, pass: pass }),
     };
     fetch(process.env.REACT_APP_API + "/login", requestOptions)
-      .then((res) => res.status)
-      .then((status) => {if (status === 200) {alert('Welcome back!');
-                                              setCurrentUser('test')}
+      .then((res) => {if (res.status === 200) {alert('Welcome back!');
+                                              setCurrentUser(res.json()['username'])}
                          else {alert('Incorrect username/password')}})
       .catch((error) => console.log(error));
   };
@@ -48,11 +47,10 @@ if (currentUser === '') {
     </div>
   )}
   else {return <div className="Login">Logged in as {currentUser}
-                <button className = 'logout' 
+                <button className = 'logout'
                         onClick = {() => setCurrentUser('')}>
                     Logout
                 </button>
                 </div>}
-  
   ;
 }
