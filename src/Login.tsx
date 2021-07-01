@@ -1,8 +1,10 @@
 import React, { ReactElement, useState } from "react";
+import { setConstantValue } from "typescript";
 
 export default function Login(): ReactElement {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
+  const [currentUser, setCurrentUser] = useState("")
 
   const userLogin = () => {
     const requestOptions = {
@@ -14,8 +16,9 @@ export default function Login(): ReactElement {
     };
     fetch("https://modern-fantasy.herokuapp.com/login", requestOptions)
       .then((res) => res.status)
-      .then((status) => {(status === 200) ? alert('Welcome back!') 
-                                          : alert('Incorrect username/password')})
+      .then((status) => {if (status === 200) {alert('Welcome back!');
+                                              setCurrentUser('test')}
+                         else {alert('Incorrect username/password')}})
       .catch((error) => console.log(error));
   };
 
@@ -27,7 +30,9 @@ export default function Login(): ReactElement {
     setPass(event.target.value);
   };
 
+if (currentUser === '') {
   return (
+    
     <div className="Login">
       <label>
         Username:
@@ -41,5 +46,13 @@ export default function Login(): ReactElement {
         Submit
       </button>
     </div>
-  );
+  )}
+  else {return <div className="Login">Logged in as {currentUser}
+                <button className = 'logout' 
+                        onClick = {() => setCurrentUser('')}>
+                    Logout
+                </button>
+                </div>}
+  
+  ;
 }

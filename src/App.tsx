@@ -15,6 +15,7 @@ export default function App(): ReactElement {
   const [teamIds, setTeamIds] = useState({});
   const [players, setPlayers] = useState(3);
   const [results, setResults] = useState({});
+  const [currentUser, setUser] = useState('Not logged in')
 
   useEffect(() => {
     fetch("https://modern-fantasy.herokuapp.com/all")
