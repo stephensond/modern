@@ -15,8 +15,7 @@ export default function App(): ReactElement {
   const [teamIds, setTeamIds] = useState({});
   const [players, setPlayers] = useState(3);
   const [results, setResults] = useState({});
-  const [currentUser, setUser] = useState('Not logged in')
-
+  
   useEffect(() => {
     fetch(process.env.REACT_APP_API + "/all")
       .then((res) => res.json())

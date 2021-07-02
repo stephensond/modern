@@ -6,6 +6,12 @@ export default function Login(): ReactElement {
   const [pass, setPass] = useState("");
   const [currentUser, setCurrentUser] = useState("")
 
+  const userLogout = () => {
+    setCurrentUser('');
+    setUsername('');
+    setPass('')
+  }
+
   const userLogin = () => {
     const requestOptions = {
       method: "POST",
@@ -16,8 +22,9 @@ export default function Login(): ReactElement {
     };
     fetch(process.env.REACT_APP_API + "/login", requestOptions)
       .then((res) => {if (res.status === 200) {alert('Welcome back!');
-                                              setCurrentUser(res.json()['username'])}
+                                              return res.json()}
                          else {alert('Incorrect username/password')}})
+      .then(j => {setCurrentUser(j['username'])})
       .catch((error) => console.log(error));
   };
 
@@ -46,9 +53,9 @@ if (currentUser === '') {
       </button>
     </div>
   )}
-  else {return <div className="Login">Logged in as {currentUser}
+  else {return <div className="Login">Logged in as {currentUser }
                 <button className = 'logout'
-                        onClick = {() => setCurrentUser('')}>
+                        onClick = {userLogout}>
                     Logout
                 </button>
                 </div>}
