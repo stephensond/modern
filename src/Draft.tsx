@@ -5,7 +5,11 @@ import PlayerInfo from "./PlayerInfo";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 
-export default function Draft(): ReactElement {
+interface DraftProps {
+  currentUser: string;
+}
+
+export default function Draft(props: DraftProps): ReactElement {
   const [apiResponse, setapiResponse] = useState([]);
   const [onClock, setOnClock] = useState(0);
   const [up, setUp] = useState(true);
@@ -81,6 +85,9 @@ export default function Draft(): ReactElement {
 
   return (
     <div className="App">
+      <div>
+        <h3>Currently logged in as {props.currentUser}</h3>
+      </div>
       <Link to="/">Logout</Link>
       <Header onClick={newDraft} />
       <h1>

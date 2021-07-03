@@ -1,7 +1,11 @@
 import { ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Login(): ReactElement {
+interface LoginProps {
+  setCurrentUser: (newUser: string) => void
+}
+
+export default function Login(props: LoginProps): ReactElement {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const [currentUser, setCurrentUser] = useState("");
@@ -30,7 +34,7 @@ export default function Login(): ReactElement {
         }
       })
       .then((j) => {
-        setCurrentUser(j["username"]);
+        props.setCurrentUser(j["username"]);
       })
       .catch((error) => console.log(error));
   };
