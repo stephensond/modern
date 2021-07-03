@@ -1,16 +1,16 @@
-import React, { ReactElement, useState } from "react";
-import { setConstantValue } from "typescript";
+import { ReactElement, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Login(): ReactElement {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
-  const [currentUser, setCurrentUser] = useState("")
+  const [currentUser, setCurrentUser] = useState("");
 
   const userLogout = () => {
-    setCurrentUser('');
-    setUsername('');
-    setPass('')
-  }
+    setCurrentUser("");
+    setUsername("");
+    setPass("");
+  };
 
   const userLogin = () => {
     const requestOptions = {
@@ -21,10 +21,17 @@ export default function Login(): ReactElement {
       body: JSON.stringify({ username: username, pass: pass }),
     };
     fetch(process.env.REACT_APP_API + "/login", requestOptions)
-      .then((res) => {if (res.status === 200) {alert('Welcome back!');
-                                              return res.json()}
-                         else {alert('Incorrect username/password')}})
-      .then(j => {setCurrentUser(j['username'])})
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Welcome back!");
+          return res.json();
+        } else {
+          alert("Incorrect username/password");
+        }
+      })
+      .then((j) => {
+        setCurrentUser(j["username"]);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -36,28 +43,39 @@ export default function Login(): ReactElement {
     setPass(event.target.value);
   };
 
-if (currentUser === '') {
-  return (
-    
-    <div className="Login">
-      <label>
-        Username:
-        <input type="text" onChange={updateUsername} />
-      </label>
-      <label>
-        Password:
-        <input type="text" onChange={updatePass} />
-      </label>
-      <button onClick={userLogin} className="login">
-        Submit
-      </button>
-    </div>
-  )}
-  else {return <div className="Login">Logged in as {currentUser }
-                <button className = 'logout'
-                        onClick = {userLogout}>
-                    Logout
-                </button>
-                </div>}
-  ;
+  if (currentUser === "") {
+    return (
+      <div className="Login">
+        <h1>Log in!</h1>
+        <label>
+          Username:
+          <input type="text" onChange={updateUsername} />
+        </label>
+        <label>
+          Password:
+          <input type="text" onChange={updatePass} />
+        </label>
+        <Link to="/draft">
+          <button onClick={userLogin} className="login">
+            Submit
+          </button>
+        </Link>
+        <div>
+          <Link to="/">
+            <h3>Go Back</h3>
+          </Link>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="Login">
+        <h1>Log in!</h1>
+        Logged in as {currentUser}
+        <button className="logout" onClick={userLogout}>
+          Logout
+        </button>
+      </div>
+    );
+  }
 }

@@ -1,6 +1,6 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import PlayerInfo from "./PlayerInfo";
-import "./App.css";
+import "./Draft.css";
 
 interface PlayerProps {
   key: number;

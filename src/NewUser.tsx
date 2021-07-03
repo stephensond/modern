@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function NewUser(): ReactElement {
   const [username, setUsername] = useState("");
@@ -34,6 +35,7 @@ export default function NewUser(): ReactElement {
 
   return (
     <div className="SignUp">
+      <h1>Sign Up!</h1>
       <label>
         Username:
         <input type="text" onChange={updateUsername} />
@@ -45,6 +47,11 @@ export default function NewUser(): ReactElement {
       <button onClick={addUser} className="createUser">
         Submit
       </button>
+      <div>
+        <Link to="/">
+          <h3>Go Back</h3>
+        </Link>
+      </div>
     </div>
   );
 }
