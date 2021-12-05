@@ -12,39 +12,3 @@
     text-align: center;
 }
 
-/* Header CSS */
-.title {
-    font-size: 40px;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-}
-.headerList {
-    list-style-type: none;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-    margin: 0 auto;
-}
-.headerItem {
-    display: inline;
-    float: left;
-    padding: 0px 10px 0px 0px;
-    vertical-align: center;
-}
-.headerContent {
-    display: block;
-    padding: 8px;
-    background-color: black;
-    color: #f5f5f5;
-    text-align: center;
-    vertical-align: center;
-    height: 40px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 30px;
-    cursor: pointer;
-}
-.headerContent:hover {
-    background-color: #f5f5f5;
-    color: black;
-}
-

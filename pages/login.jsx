@@ -1,36 +1,35 @@
-import { useState } from "react";
-import Link from 'next/link'
+import Link from 'next/link';
+import React, { useState } from 'react';
 
-export default function Login(props) {
-  const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
-  const [currentUser, setCurrentUser] = useState("");
+export default function Login() {
+  const [username, setUsername] = useState('');
+  const [pass, setPass] = useState('');
 
   const userLogout = () => {
-    setCurrentUser("");
-    setUsername("");
-    setPass("");
+    setUsername('');
+    setPass('');
   };
 
   const userLogin = () => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: username, pass: pass }),
+      body: JSON.stringify({ username, pass }),
     };
-    fetch(process.env.REACT_APP_API + "/login", requestOptions)
+    console.log(process.env.NEXT_PUBLIC_API);
+    fetch(`${process.env.NEXT_PUBLIC_API}/login`, requestOptions)
       .then((res) => {
         if (res.status === 200) {
-          alert("Welcome back!");
+          alert('Welcome back!');
           return res.json();
-        } else {
-          alert("Incorrect username/password");
         }
+        alert('Incorrect username/password');
+        return null;
       })
-      .then((j) => {
-        props.setCurrentUser(j["username"]);
+      .then(() => {
+        // setUser(j.username);
       })
       .catch((error) => console.log(error));
   };
@@ -43,20 +42,24 @@ export default function Login(props) {
     setPass(event.target.value);
   };
 
-  if (currentUser === "") {
+  if (true) {
     return (
       <div className="Login">
         <h1>Log in!</h1>
-        <label>
+        <label htmlFor="username">
           Username:
-          <input type="text" onChange={updateUsername} />
+          <input type="text" onChange={updateUsername} id="username" />
         </label>
-        <label>
+        <label htmlFor="password">
           Password:
-          <input type="text" onChange={updatePass} />
+          <input type="text" onChange={updatePass} id="password" />
         </label>
         <Link href="/draft">
-          <button onClick={userLogin} className="login">
+          <button
+            onClick={userLogin}
+            className="login"
+            type="button"
+          >
             Submit
           </button>
         </Link>
@@ -67,15 +70,19 @@ export default function Login(props) {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className="Login">
-        <h1>Log in!</h1>
-        Logged in as {currentUser}
-        <button className="logout" onClick={userLogout}>
-          Logout
-        </button>
-      </div>
-    );
   }
+
+  return (
+    <div className="Login">
+      <h1>Log in!</h1>
+      Logged in as
+      <button
+        className="logout"
+        onClick={userLogout}
+        type="button"
+      >
+        Logout
+      </button>
+    </div>
+  );
 }

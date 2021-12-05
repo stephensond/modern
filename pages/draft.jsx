@@ -1,30 +1,29 @@
-import { useState, useEffect } from "react";
-import classes from './draft.module.css'
-import Player from "../components/Player";
-import Header from "../components/header";
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import Header from '../components/header';
+import Player from '../components/player';
+import classes from './draft.module.css';
 
-export default function Draft(props) {
+export default function Draft() {
   const [apiResponse, setapiResponse] = useState([]);
   const [onClock, setOnClock] = useState(0);
   const [up, setUp] = useState(true);
   const [pick, setPick] = useState(1);
   const [teams, setTeams] = useState(4);
   const [teamIds, setTeamIds] = useState({});
-  const [players, setPlayers] = useState(3);
   const [results, setResults] = useState({});
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API + "/all")
+    fetch(`${process.env.NEXT_PUBLIC_API}/all`)
       .then((res) => res.json())
       .then((json) => setapiResponse(json));
   }, []);
 
   const newDraft = () => {
-    fetch(process.env.REACT_APP_API + "/newDraft")
+    fetch(`${process.env.NEXT_PUBLIC_API}/newDraft`)
       .then((res) => res.json())
-      .then((json) => json.map((x) => x["teamid"]))
-      .then((arr) => Object.assign({}, arr))
+      .then((json) => json.map((x) => x.teamid))
+      .then((arr) => ({ ...arr }))
       .then((nextjson) => {
         setTeams(Object.keys(nextjson).length);
         setTeamIds(nextjson);
@@ -34,20 +33,20 @@ export default function Draft(props) {
 
   const endDraft = () => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(results),
     };
-    fetch(process.env.REACT_APP_API + "/endDraft", requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API}/endDraft`, requestOptions)
       .then((res) => res.text)
       .catch((error) => console.log(error));
   };
 
   const draft = (player) => {
-    let picker = teamIds[onClock];
-    let currentDraft = results;
+    const picker = teamIds[onClock];
+    const currentDraft = results;
     if (currentDraft[picker] === undefined) {
       currentDraft[picker] = [player];
     } else {
@@ -67,26 +66,31 @@ export default function Draft(props) {
     } else {
       setOnClock(onClock - 1);
     }
-    if (pick === players * teams) {
+    if (pick === 3 * teams) {
       endDraft();
     }
   };
 
   const sortedList = apiResponse.sort(
-    (a, b) => {
-      return a.playerid - b.playerid;
-    }
+    (a, b) => a.playerid - b.playerid,
   );
 
   return (
-    <div className={classes.App}>
+    <div>
       <div>
-        <h3>Currently logged in as {props.currentUser}</h3>
+        <h3>
+          Currently logged in as
+        </h3>
       </div>
       <Link href="/">Logout</Link>
       <Header onClick={newDraft} />
       <h1>
-        Pick{pick}, team{onClock + 1} on clock
+        Pick
+        {pick}
+        , team
+        {onClock + 1}
+        {' '}
+        on clock
       </h1>
       <table className={classes.table}>
         <tbody>
@@ -98,11 +102,9 @@ export default function Draft(props) {
             <th>College</th>
             <th>Draft</th>
           </tr>
-          {sortedList.map((value, index) => {
-            return (
-              <Player key={index} info={value} draft={draft} team={onClock} />
-            );
-          })}
+          {sortedList.map((value) => (
+            <Player info={value} draft={draft} team={onClock} />
+          ))}
         </tbody>
       </table>
     </div>
