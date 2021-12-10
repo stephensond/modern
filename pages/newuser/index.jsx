@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Welcome from '../../components/welcome';
 
 export default function NewUser() {
   const [username, setUsername] = useState('');
@@ -34,28 +35,31 @@ export default function NewUser() {
   };
 
   return (
-    <div className="SignUp">
-      <h1>Sign Up!</h1>
-      <label htmlFor="username">
-        Username:
-        <input type="text" onChange={updateUsername} id="username" />
-      </label>
-      <label htmlFor="username">
-        Password:
-        <input type="text" onChange={updatePass} id="username" />
-      </label>
-      <button
-        onClick={addUser}
-        className="createUser"
-        type="button"
-      >
-        Submit
-      </button>
-      <div>
-        <Link href="/">
-          <h3>Go Back</h3>
-        </Link>
+    <Welcome>
+      <div className="SignUp">
+        <h1>Sign Up!</h1>
+        <label htmlFor="username">
+          Username:
+          <input type="text" onChange={updateUsername} id="username" />
+        </label>
+        <label htmlFor="username">
+          Password:
+          <input type="text" onChange={updatePass} id="username" />
+        </label>
+        <button
+          onClick={addUser}
+          className="createUser"
+          type="button"
+        >
+          Submit
+        </button>
+        <div>
+          <Link href="/">
+            <h3>Go Back</h3>
+          </Link>
+        </div>
       </div>
-    </div>
+
+    </Welcome>
   );
 }

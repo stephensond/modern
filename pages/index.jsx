@@ -1,16 +1,19 @@
-import Link from 'next/link';
 import React from 'react';
+import LinkTo from '../components/linkto';
+import Welcome from '../components/welcome';
+import styles from './index.module.css';
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to Modern Fantasy!</h1>
-      <div>
-        <Link href="/login"><h3>Log in</h3></Link>
+    <Welcome>
+      <div className={styles.buttons}>
+        <LinkTo href="/login" className={styles.link}>
+          Log in
+        </LinkTo>
+        <LinkTo href="/newuser" className={styles.link}>
+          Sign up
+        </LinkTo>
       </div>
-      <div>
-        <Link href="/newuser"><h3>Sign up</h3></Link>
-      </div>
-    </div>
+    </Welcome>
   );
 }

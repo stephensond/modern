@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function Header({ onClick }) {
+  const loggedIn = false;
+  if (loggedIn) {
+
+  }
+
   return (
     <div className="Header">
       <h1 className="title">Modern Fantasy</h1>

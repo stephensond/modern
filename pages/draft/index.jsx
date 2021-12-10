@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import Header from '../components/header';
-import Player from '../components/player';
+import Header from '../../components/header';
+import Player from '../../components/player';
 import classes from './draft.module.css';
 
 export default function Draft() {
