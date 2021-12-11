@@ -1,3 +1,3 @@
 # modern
 
-Front-end for the Modern Fantasy application. Uses ReactJS.
+Front-end for the Modern Fantasy application. Uses ReactJS. 
