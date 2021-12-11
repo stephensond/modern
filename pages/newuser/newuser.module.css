@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
+}
+
+.signup {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 0rem;
+}
+
+.error {
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem;
+  background-color: black;
+  border: solid;
+  border-width: 2px;
+  border-radius: 0.5rem;
+  border-color: black;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.submit {
+  margin: 0.5rem 0rem 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+  border: solid;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor:pointer;
+}
+
+.submit:hover,
+.submit:focus,
+.go-back:hover,
+.go-back:focus {
+  color: rgb(125, 125, 125);
+}
+
+.go-back {
+  color: black;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.input {
+  margin: 0.5rem 0rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border-color: black;
+}

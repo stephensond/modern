@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import Header from '../../components/header';
-import Player from '../../components/player';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../context/useUserContext';
+import Header from '../header';
+import Player from '../player';
 import classes from './draft.module.css';
 
 export default function Draft() {
@@ -12,6 +12,7 @@ export default function Draft() {
   const [teams, setTeams] = useState(4);
   const [teamIds, setTeamIds] = useState({});
   const [results, setResults] = useState({});
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API}/all`)
@@ -75,14 +76,25 @@ export default function Draft() {
     (a, b) => a.playerid - b.playerid,
   );
 
+  const logout = () => {
+    setUser('');
+  };
+
   return (
     <div>
       <div>
         <h3>
           Currently logged in as
+          {' '}
+          {user}
         </h3>
       </div>
-      <Link href="/">Logout</Link>
+      <button
+        type="button"
+        onClick={logout}
+      >
+        Logout
+      </button>
       <Header onClick={newDraft} />
       <h1>
         Pick

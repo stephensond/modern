@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import useUserContext, { UserContext } from '../context/useUserContext';
 import './app.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Component {...pageProps} />
+    <UserContext.Provider value={useUserContext()}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+    </UserContext.Provider>
   );
 }
 
