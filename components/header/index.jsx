@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import LinkTo from '../linkto';
 
 export default function Header({ onClick }) {
   return (
@@ -22,6 +23,11 @@ export default function Header({ onClick }) {
           <button type="button" className="headerContent" onClick={onClick}>
             New Draft
           </button>
+        </li>
+        <li className="headerItem">
+          <LinkTo href="/create-league" className="headerContent">
+            Create League
+          </LinkTo>
         </li>
       </ul>
     </div>
