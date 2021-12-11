@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import classes from './player.module.css';
 
-export default function Player({ info, team }) {
+export default function Player({ info, team, draft }) {
   const {
-    isDrafted: initialIsDrafted, playerid, playername, pos, school, draft,
+    isDrafted: initialIsDrafted, playerid, playername, pos, school,
   } = info;
   const [isDrafted, setIsDrafted] = useState(initialIsDrafted);
 
@@ -18,7 +18,7 @@ export default function Player({ info, team }) {
       },
       body: JSON.stringify({ id: playerid, team }),
     };
-    fetch(`${process.env.REACT_APP_API}/draft`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API}/draft`, requestOptions)
       .then((res) => res.text())
       .then((text) => console.log(`Updated player with id ${text}`))
       .catch((error) => console.log(error));
@@ -61,7 +61,7 @@ Player.propTypes = {
     pos: PropTypes.string.isRequired,
     school: PropTypes.string.isRequired,
     isDrafted: PropTypes.bool.isRequired,
-    draft: PropTypes.func.isRequired,
   }).isRequired,
   team: PropTypes.string.isRequired,
+  draft: PropTypes.func.isRequired,
 };
