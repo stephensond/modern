@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/useUserContext';
@@ -5,7 +6,29 @@ import LinkTo from '../linkto';
 import styles from './header-authed.module.css';
 
 export default function HeaderAuthed({ children }) {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
+
+  const signout = () => {
+    setUser('');
+    router.push('/');
+  };
+
+  if (!user) {
+    return (
+      <div className={styles['error-box']}>
+        <p className={styles.error}>To view this page, you need to be signed in!</p>
+        <div className={styles.buttons}>
+          <LinkTo href="/login" className={styles.link}>
+            Log in
+          </LinkTo>
+          <LinkTo href="/newuser" className={styles.link}>
+            Sign up
+          </LinkTo>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.header}>
@@ -26,7 +49,7 @@ export default function HeaderAuthed({ children }) {
           <button
             type="button"
             className={`${styles['header-content']} ${styles.signout}`}
-            onClick={() => setUser('')}
+            onClick={signout}
           >
             Sign out
           </button>
