@@ -100,7 +100,12 @@ export default function Draft() {
               <th>Draft</th>
             </tr>
             {sortedList.map((value) => (
-              <Player info={value} draft={draft} team={onClock} />
+              <Player
+                key={value.playerid}
+                info={value}
+                draft={draft}
+                team={onClock}
+              />
             ))}
           </tbody>
         </table>

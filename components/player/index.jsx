@@ -5,9 +5,9 @@ import classes from './player.module.css';
 
 export default function Player({ info, team, draft }) {
   const {
-    isDrafted: initialIsDrafted, playerid, playername, pos, school,
+    playerid, playername, pos, school,
   } = info;
-  const [isDrafted, setIsDrafted] = useState(initialIsDrafted);
+  const [isDrafted, setIsDrafted] = useState(false);
 
   const callAPI = () => {
     // I don't think this API call is doing anything significant at this point
@@ -56,12 +56,11 @@ export default function Player({ info, team, draft }) {
 
 Player.propTypes = {
   info: PropTypes.shape({
-    playerid: PropTypes.string.isRequired,
+    playerid: PropTypes.number.isRequired,
     playername: PropTypes.string.isRequired,
     pos: PropTypes.string.isRequired,
     school: PropTypes.string.isRequired,
-    isDrafted: PropTypes.bool.isRequired,
   }).isRequired,
-  team: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
   draft: PropTypes.func.isRequired,
 };
