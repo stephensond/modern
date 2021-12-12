@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context/useUserContext';
-import Header from '../header';
-import Player from '../player';
-import classes from './draft.module.css';
+import React, { useEffect, useState } from 'react';
+import HeaderAuthed from '../../common/header-authed';
+import Player from '../../components/player';
+import styles from './draft.module.css';
 
 export default function Draft() {
   const [apiResponse, setapiResponse] = useState([]);
@@ -12,7 +11,6 @@ export default function Draft() {
   const [teams, setTeams] = useState(4);
   const [teamIds, setTeamIds] = useState({});
   const [results, setResults] = useState({});
-  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API}/all`)
@@ -56,9 +54,6 @@ export default function Draft() {
     setResults(currentDraft);
     setPick(pick + 1);
 
-    // check that draft is getting stored
-    console.log(results);
-
     // increment the pick counter
     if (pick % teams === 0) {
       setUp(!up);
@@ -76,49 +71,45 @@ export default function Draft() {
     (a, b) => a.playerid - b.playerid,
   );
 
-  const logout = () => {
-    setUser('');
-  };
-
   return (
-    <div>
-      <div>
-        <h3>
-          Currently logged in as
+    <HeaderAuthed>
+      <div className={styles.container}>
+        <button
+          type="button"
+          onClick={newDraft}
+          className={styles['new-draft']}
+        >
+          New Draft
+        </button>
+        <p className={styles['table-header']}>
+          Pick
+          {pick}
+          , team
+          {onClock + 1}
           {' '}
-          {user}
-        </h3>
+          on clock
+        </p>
+        <table className={styles.table}>
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Team</th>
+              <th>College</th>
+              <th>Draft</th>
+            </tr>
+            {sortedList.map((value) => (
+              <Player
+                key={value.playerid}
+                info={value}
+                draft={draft}
+                team={onClock}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
-      <button
-        type="button"
-        onClick={logout}
-      >
-        Logout
-      </button>
-      <Header onClick={newDraft} />
-      <h1>
-        Pick
-        {pick}
-        , team
-        {onClock + 1}
-        {' '}
-        on clock
-      </h1>
-      <table className={classes.table}>
-        <tbody>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Team</th>
-            <th>College</th>
-            <th>Draft</th>
-          </tr>
-          {sortedList.map((value) => (
-            <Player info={value} draft={draft} team={onClock} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </HeaderAuthed>
   );
 }

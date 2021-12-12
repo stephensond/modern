@@ -4,6 +4,7 @@ const UserContext = React.createContext();
 
 const useUserContext = () => {
   const [userContext, setUserContext] = useState('');
+  const [loadingUser, setLoadingUser] = useState(true);
 
   const getUserFromLocalStorage = () => {
     if (typeof window !== 'undefined') {
@@ -14,6 +15,8 @@ const useUserContext = () => {
   };
 
   const addUserToLocalStorage = (newUser) => {
+    console.log('hook');
+    console.log(newUser);
     setUserContext(newUser);
 
     if (typeof window !== 'undefined') {
@@ -27,9 +30,11 @@ const useUserContext = () => {
     if (localUser) {
       setUserContext(localUser);
     }
+
+    setLoadingUser(false);
   }, []);
 
-  return { user: userContext, setUser: addUserToLocalStorage };
+  return { user: userContext, setUser: addUserToLocalStorage, loadingUser };
 };
 
 export { UserContext };

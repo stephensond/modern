@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useContext, useState } from 'react';
 import httpRequest from '../../api';
-import LinkTo from '../../components/linkto';
-import Welcome from '../../components/welcome';
+import HeaderUnauthed from '../../common/header-unauthed';
+import LinkTo from '../../common/linkto';
 import { UserContext } from '../../context/useUserContext';
 import styles from './login.module.css';
 
@@ -59,7 +59,7 @@ export default function Login() {
   };
 
   return (
-    <Welcome>
+    <HeaderUnauthed>
       <form onSubmit={userLogin} className={styles.container}>
         <p className={styles.login}>Log in</p>
         {error && (<p className={styles.error}>{error}</p>)}
@@ -93,6 +93,6 @@ export default function Login() {
           Go Back
         </LinkTo>
       </form>
-    </Welcome>
+    </HeaderUnauthed>
   );
 }
