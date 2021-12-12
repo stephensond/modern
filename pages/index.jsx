@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-import Home from '../components/home';
-import LinkTo from '../components/linkto';
-import Welcome from '../components/welcome';
+import HomeAuthed from '../components/home-authed';
+import HomeUnauthed from '../components/home-unauthed';
 import { UserContext } from '../context/useUserContext';
-import styles from './index.module.css';
 
 export default function Index() {
   const { user, loadingUser } = useContext(UserContext);
@@ -12,20 +10,5 @@ export default function Index() {
     return null;
   }
 
-  if (user) {
-    return <Home />;
-  }
-
-  return (
-    <Welcome>
-      <div className={styles.buttons}>
-        <LinkTo href="/login" className={styles.link}>
-          Log in
-        </LinkTo>
-        <LinkTo href="/newuser" className={styles.link}>
-          Sign up
-        </LinkTo>
-      </div>
-    </Welcome>
-  );
+  return user ? <HomeAuthed /> : <HomeUnauthed />;
 }

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import styles from './welcome.module.css';
+import styles from './header-unauthed.module.css';
 
-export default function Welcome({ children }) {
+export default function HeaderUnauthed({ children }) {
   return (
     <div className={styles.container}>
       <p className={styles.title}>Welcome to Modern Fantasy!</p>
@@ -12,6 +12,6 @@ export default function Welcome({ children }) {
   );
 }
 
-Welcome.propTypes = {
+HeaderUnauthed.propTypes = {
   children: PropTypes.node.isRequired,
 };

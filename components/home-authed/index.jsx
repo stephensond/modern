@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
+import HeaderAuthed from '../../common/header-authed';
 import { UserContext } from '../../context/useUserContext';
-import Header from '../header';
-import styles from './home.module.css';
+import styles from './home-authed.module.css';
 
-export default function Home() {
+export default function HomeAuthed() {
   const { user } = useContext(UserContext);
 
   return (
-    <Header>
+    <HeaderAuthed>
       <div className={styles['welcome-back']}>
         Welcome back,
         {' '}
         {user}
         !
       </div>
-    </Header>
+    </HeaderAuthed>
   );
 }

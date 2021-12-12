@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import httpRequest from '../../api';
-import Header from '../../components/header';
-import LinkTo from '../../components/linkto';
+import HeaderAuthed from '../../common/header-authed';
+import LinkTo from '../../common/linkto';
 import { UserContext } from '../../context/useUserContext';
 import styles from './create-league.module.css';
 
@@ -55,7 +55,7 @@ export default function CreateLeague() {
   };
 
   return (
-    <Header>
+    <HeaderAuthed>
       <div className={styles.container}>
         <form onSubmit={createLeague} className={styles['inner-container']}>
           <p className={styles['create-league']}>Create League</p>
@@ -101,6 +101,6 @@ export default function CreateLeague() {
           </LinkTo>
         </form>
       </div>
-    </Header>
+    </HeaderAuthed>
   );
 }

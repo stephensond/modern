@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/useUserContext';
 import LinkTo from '../linkto';
-import styles from './header.module.css';
+import styles from './header-authed.module.css';
 
-export default function Header({ children }) {
+export default function HeaderAuthed({ children }) {
   const { setUser } = useContext(UserContext);
 
   return (
@@ -39,6 +39,6 @@ export default function Header({ children }) {
   );
 }
 
-Header.propTypes = {
+HeaderAuthed.propTypes = {
   children: PropTypes.node.isRequired,
 };

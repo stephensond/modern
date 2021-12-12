@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/header';
+import HeaderAuthed from '../../common/header-authed';
 import Player from '../../components/player';
 import styles from './draft.module.css';
 
@@ -72,7 +72,7 @@ export default function Draft() {
   );
 
   return (
-    <Header>
+    <HeaderAuthed>
       <div className={styles.container}>
         <button
           type="button"
@@ -105,6 +105,6 @@ export default function Draft() {
           </tbody>
         </table>
       </div>
-    </Header>
+    </HeaderAuthed>
   );
 }
