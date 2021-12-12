@@ -1,39 +1,44 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../../context/useUserContext';
 import LinkTo from '../linkto';
+import styles from './header.module.css';
 
-export default function Header({ onClick }) {
+export default function Header({ children }) {
+  const { setUser } = useContext(UserContext);
+
   return (
-    <div className="Header">
-      <h1 className="title">Modern Fantasy</h1>
-      <ul className="headerList">
-        <li className="headerItem">
-          <button type="button" className="headerContent">Home</button>
-        </li>
-        <li className="headerItem">
-          <button type="button" className="headerContent">Leagues</button>
-        </li>
-        <li className="headerItem">
-          <button type="button" className="headerContent">Draft</button>
-        </li>
-        <li className="headerItem">
-          <button type="button" className="headerContent">About</button>
-        </li>
-        <li className="headerItem">
-          <button type="button" className="headerContent" onClick={onClick}>
-            New Draft
-          </button>
-        </li>
-        <li className="headerItem">
-          <LinkTo href="/create-league" className="headerContent">
+    <div className={styles.header}>
+      <div className={styles['header-list']}>
+        <LinkTo
+          href="/"
+          className={styles['modern-fantasy']}
+        >
+          Modern Fantasy
+        </LinkTo>
+        <div className={styles['header-items']}>
+          <LinkTo href="/create-league" className={styles['header-content']}>
             Create League
           </LinkTo>
-        </li>
-      </ul>
+          <LinkTo href="/draft" className={styles['header-content']}>
+            Draft
+          </LinkTo>
+          <button
+            type="button"
+            className={`${styles['header-content']} ${styles.signout}`}
+            onClick={() => setUser('')}
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+      <div>
+        {children}
+      </div>
     </div>
   );
 }
 
 Header.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };

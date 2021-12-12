@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
-import Draft from '../components/draft';
+import Home from '../components/home';
 import LinkTo from '../components/linkto';
 import Welcome from '../components/welcome';
 import { UserContext } from '../context/useUserContext';
 import styles from './index.module.css';
 
-export default function Home() {
-  const { user } = useContext(UserContext);
+export default function Index() {
+  const { user, loadingUser } = useContext(UserContext);
+
+  if (loadingUser) {
+    return null;
+  }
 
   if (user) {
-    return <Draft />;
+    return <Home />;
   }
 
   return (

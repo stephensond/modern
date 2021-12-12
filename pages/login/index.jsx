@@ -43,6 +43,7 @@ export default function Login() {
       setError('Sorry, we are unable to log you in at this time.');
       return;
     }
+    console.log(responseUsername);
 
     setUser(responseUsername);
     router.push('/');

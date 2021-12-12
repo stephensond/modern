@@ -1,34 +1,50 @@
-/* Header CSS */
-.title {
-  font-size: 40px;
-  font-family: 'Courier New', Courier, monospace;
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-list {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  border: solid;
+  border-width: 2px;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+
+.modern-fantasy {
+  text-decoration: none;
+  padding: 0.5rem 2rem;
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.header-items {
+  display: flex;
+  margin: 0rem;
+}
+
+.header-content {
+  padding: 1rem 1.5rem;
+  background-color: white;
+  color: black;
   text-align: center;
-}
-.headerList {
-  list-style-type: none;
-  padding: 0;
-  overflow: hidden;
-  background-color: black;
-  margin: 0 auto;
-}
-.headerItem {
-  display: inline;
-  float: left;
-  padding: 0px 10px 0px 0px;
-  vertical-align: center;
-}
-.headerContent {
-  display: block;
-  padding: 8px;
-  background-color: black;
-  color: #f5f5f5;
-  text-align: center;
-  height: 40px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 30px;
+  font-size: 1.25rem;
   cursor: pointer;
+  text-decoration: none;
+  border: solid;
+  border-width: 0px 0px 0px 1px;
+  display: flex;
+  align-items: center;
+  
 }
-.headerContent:hover {
+.header-content:hover {
   background-color: #f5f5f5;
   color: black;
+}
+
+.signout {
+  border-radius: 0rem 0.5rem 0.5rem 0rem;
 }
