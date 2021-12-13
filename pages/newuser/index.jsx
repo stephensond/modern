@@ -38,7 +38,7 @@ export default function NewUser() {
     }
 
     setUser(username);
-    router.push('/');
+    router.replace('/');
   }, [username, pass, router, setUser]);
 
   const updateUsername = (event) => {

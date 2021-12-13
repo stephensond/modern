@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import classes from './player.module.css';
@@ -43,7 +42,7 @@ export default function Player({ info, team, draft }) {
       <td>
         <button
           onClick={callAPI}
-          className={classnames(classes.button, classes[text])}
+          className={`${classes.button} ${classes[text]}`}
           type="button"
         >
           {text}

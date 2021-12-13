@@ -1,0 +1,15 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": false,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true,
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}

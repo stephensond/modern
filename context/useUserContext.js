@@ -15,8 +15,6 @@ const useUserContext = () => {
   };
 
   const addUserToLocalStorage = (newUser) => {
-    console.log('hook');
-    console.log(newUser);
     setUserContext(newUser);
 
     if (typeof window !== 'undefined') {
