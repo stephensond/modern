@@ -42,7 +42,7 @@ export default function Player({ info, team, draft }) {
       <td>
         <button
           onClick={callAPI}
-          className={`${classes.button}${classes[text]}`}
+          className={`${classes.button} ${classes[text]}`}
           type="button"
         >
           {text}
