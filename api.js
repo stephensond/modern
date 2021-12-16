@@ -12,14 +12,19 @@ const httpRequest = async ({
   method, requestBody, endpoint,
 }) => {
   try {
+    // if (method === 'GET') {
+    //   const
+    // }
     const requestOptions = {
       method,
       headers: {
         'Content-Type': 'application/json',
       },
       body: requestBody,
-    };
+    }
+    console.log(requestOptions);
 
+    
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}${endpoint}`, requestOptions);
     const { status, ok } = response;
 
