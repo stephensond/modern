@@ -1,3 +1,3 @@
 # modern
 
-Front-end for the Modern Fantasy application. Uses ReactJS. 
+The frontend of Modern Fantasy, built with React and Next.js.
