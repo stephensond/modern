@@ -8,9 +8,9 @@ import PopupWindow from '../../components/popup-window';
 import LinkTo from '../../common/linkto';
 
 export default function joinLeague() {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [apiResponse, setapiResponse] = useState([]);
-    const [popupMessage, setPopupMessage] = useState({'Sub Message': '', 'Link': '/'})
+    const [popupMessage, setPopupMessage] = useState({ 'Sub Message': '', 'Link': '/' })
     const [popupVisible, setPopupVisible] = useState(false)
 
     const handleMessage = (mess) => {
@@ -21,20 +21,21 @@ export default function joinLeague() {
     const grabLeagues = async () => {
 
         console.log('hi')
-        const {ok, responseBody} = await httpRequest({
+        const { ok, responseBody } = await httpRequest({
             method: 'GET',
             endpoint: '/grableagues'
         })
 
         if (!ok) {
-            let message = {'Message': 'Unable to connect with leagues right now',
-                        'Sub Message': 'Go Back',
-                        'Link': '/'
+            let message = {
+                'Message': 'Unable to connect with leagues right now',
+                'Sub Message': 'Go Back',
+                'Link': '/'
             }
             handleMessage(message)
             return
         }
-        
+
         setapiResponse(responseBody)
         return
     }
@@ -42,26 +43,26 @@ export default function joinLeague() {
     const handleClose = (e) => {
         setPopupVisible(e);
     }
-    
+
     useEffect(() => {
         grabLeagues()
-      }, []);
+    }, []);
 
-    return(
+    return (
         <HeaderAuthed>
             <div className={styles.container}>
-              <PopupWindow
-                title={''}
-                show={popupVisible}
-                onClose={handleClose}
-              >
-                <h2>{popupMessage['Message']}</h2>
-                <h3>
-                    <LinkTo href={popupMessage['Link']}>
-                        {popupMessage['Sub Message']}
-                    </LinkTo>
-                </h3>
-              </PopupWindow>
+                <PopupWindow
+                    title={''}
+                    show={popupVisible}
+                    onClose={handleClose}
+                >
+                    <h2>{popupMessage['Message']}</h2>
+                    <h3>
+                        <LinkTo href={popupMessage['Link']}>
+                            {popupMessage['Sub Message']}
+                        </LinkTo>
+                    </h3>
+                </PopupWindow>
                 <table className={styles.leaguesTable}>
                     <tbody>
                         <tr>
@@ -81,7 +82,7 @@ export default function joinLeague() {
                     </tbody>
                 </table>
             </div>
-            
+
         </HeaderAuthed>
     )
 }

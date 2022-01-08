@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import popupStyles from "./popup-window.module.css";
 import PropTypes from "prop-types";
 
-export default function PopupWindow (props) {
+export default function PopupWindow(props) {
   const [show, setShow] = useState(false);
 
   const closeHandler = (e) => {
