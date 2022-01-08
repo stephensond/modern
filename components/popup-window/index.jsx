@@ -26,7 +26,12 @@ export default function PopupWindow({
     >
       <div className={popupStyles.popup}>
         <h2>{title}</h2>
-        <span role="button" className={popupStyles.close} onClick={closeHandler} onKeyDown={closeHandler}>
+        <span 
+          role="button"
+          className={popupStyles.close} 
+          onClick={closeHandler} 
+          onKeyDown={closeHandler}
+          tabIndex={0}>
           &times;
         </span>
         <div className={popupStyles.content}>{children}</div>
