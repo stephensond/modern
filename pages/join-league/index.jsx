@@ -18,31 +18,32 @@ export default function JoinLeague() {
     setPopupVisible(true);
   };
 
-  const grabLeagues = async () => {
-    console.log('hi');
-    const { ok, responseBody } = await httpRequest({
-      method: 'GET',
-      endpoint: '/grableagues',
-    });
-
-    if (!ok) {
-      const message = {
-        message: 'Unable to connect with leagues right now',
-        subMessage: 'Go Back',
-        link: '/',
-      };
-      handleMessage(message);
-      return;
-    }
-
-    setapiResponse(responseBody);
-  };
-
   const handleClose = (e) => {
     setPopupVisible(e);
   };
 
   useEffect(() => {
+      
+    const grabLeagues = async () => {
+      console.log('hi');
+      const { ok, responseBody } = await httpRequest({
+        method: 'GET',
+        endpoint: '/grableagues',
+      });
+    
+      if (!ok) {
+        const message = {
+          message: 'Unable to connect with leagues right now',
+          subMessage: 'Go Back',
+          link: '/',
+        };
+        handleMessage(message);
+        return;
+      }
+    
+      setapiResponse(responseBody);
+      };
+
     grabLeagues();
   }, []);
 

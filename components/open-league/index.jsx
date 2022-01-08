@@ -23,43 +23,40 @@ export default function OpenLeague({ info, user, handleMessage }) {
         link: '/',
       };
       handleMessage(message);
-    }
-    else if (!ok) {
+    } else if (!ok) {
       const message = {
         message: 'There was an issue joining this league',
         subMessage: 'Please try again or find another league',
         link: '/join-league',
       };
       handleMessage(message);
-    }
-    else {
+    } else {
       const message = {
         message: 'Succesfully joined league',
         subMessage: 'Go to league home page',
         link: '/', // eventually this will be the custom url for the league
       };
-      setCurrTeamCt(currTeamCt + 1)
+      setCurrTeamCt(currTeamCt + 1);
       handleMessage(message);
     }
-
-    
-  }
+  };
 
   return (
-    <tr className='leagueRow' id={leagueid}>
-        <td className='league-name'>{leaguename}</td>
-        <td className='capacity'>
+    <tr className="leagueRow" id={leagueid}>
+        <td className="league-name">{leaguename}</td>
+        <td className="capacity">
             {currTeamCt}
             /
             {maxteams}
         </td>
-        <td className='owner'>{ownerusername}</td>
+        <td className="owner">{ownerusername}</td>
         <td>
             <button
             onClick={joinLeague}
             className={styles.join}
-            type='button'>
-            Join League
+            type="button"
+            >
+                Join League
             </button>
         </td>
     </tr>
