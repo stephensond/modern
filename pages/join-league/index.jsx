@@ -4,11 +4,19 @@ import HeaderAuthed from '../../common/header-authed';
 import { UserContext } from '../../context/useUserContext';
 import OpenLeague from '../../components/open-league';
 import styles from './joinleague.module.css'
+import PopupWindow from '../../components/popup-window';
+import LinkTo from '../../common/linkto';
 
 export default function joinLeague() {
     const {user} = useContext(UserContext);
     const [apiResponse, setapiResponse] = useState([]);
-    const [error, setError] = useState('');
+    const [popupMessage, setPopupMessage] = useState({'Link': '/'})
+    const [popupVisible, setPopupVisible] = useState(false)
+
+    const handleMessage = (mess) => {
+        setPopupMessage(mess);
+        setPopupVisible(true);
+    }
 
     const grabLeagues = async () => {
 
@@ -19,15 +27,19 @@ export default function joinLeague() {
         })
 
         if (!ok) {
-            setError('Could not load leagues')
+            setMessage('Could not load leagues')
+            handleMessage(message)
             return
         }
         
         setapiResponse(responseBody)
         return
     }
-    
 
+    const handleClose = (e) => {
+        setPopupVisible(e);
+    }
+    
     useEffect(() => {
         grabLeagues()
       }, []);
@@ -35,6 +47,18 @@ export default function joinLeague() {
     return(
         <HeaderAuthed>
             <div className={styles.container}>
+              <PopupWindow
+                title={''}
+                show={popupVisible}
+                onClose={handleClose}
+              >
+                <h2>{popupMessage['Message']}</h2>
+                <h3>
+                    <LinkTo href={popupMessage['Link']}>
+                        {popupMessage['Sub Message']}
+                    </LinkTo>
+                </h3>
+              </PopupWindow>
                 <table className={styles.leaguesTable}>
                     <tbody>
                         <tr>
@@ -48,6 +72,7 @@ export default function joinLeague() {
                                 key={value.leagueid}
                                 info={value}
                                 user={user}
+                                handleMessage={handleMessage}
                             />
                         ))}
                     </tbody>

@@ -14,3 +14,16 @@
     background-color: black;
     color: white;
 }
+
+.error {
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: black;
+    border: solid;
+    border-width: 2px;
+    border-radius: 0.5rem;
+    border-color: black;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
