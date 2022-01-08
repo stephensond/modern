@@ -10,7 +10,7 @@ import LinkTo from '../../common/linkto';
 export default function joinLeague() {
     const {user} = useContext(UserContext);
     const [apiResponse, setapiResponse] = useState([]);
-    const [popupMessage, setPopupMessage] = useState({'Link': '/'})
+    const [popupMessage, setPopupMessage] = useState({'Sub Message': '', 'Link': '/'})
     const [popupVisible, setPopupVisible] = useState(false)
 
     const handleMessage = (mess) => {
@@ -27,7 +27,10 @@ export default function joinLeague() {
         })
 
         if (!ok) {
-            setMessage('Could not load leagues')
+            let message = {'Message': 'Unable to connect with leagues right now',
+                        'Sub Message': 'Go Back',
+                        'Link': '/'
+            }
             handleMessage(message)
             return
         }
