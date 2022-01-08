@@ -43,22 +43,22 @@ export default function OpenLeague({ info, user, handleMessage }) {
 
   return (
     <tr className="leagueRow" id={leagueid}>
-        <td className="league-name">{leaguename}</td>
-        <td className="capacity">
-            {currTeamCt}
-            /
-            {maxteams}
-        </td>
-        <td className="owner">{ownerusername}</td>
-        <td>
-            <button
-            onClick={joinLeague}
-            className={styles.join}
-            type="button"
-            >
-                Join League
-            </button>
-        </td>
+      <td className="league-name">{leaguename}</td>
+      <td className="capacity">
+        {currTeamCt}
+        /
+        {maxteams}
+      </td>
+      <td className="owner">{ownerusername}</td>
+      <td>
+        <button
+          onClick={joinLeague}
+          className={styles.join}
+          type="button"
+        >
+          Join League
+        </button>
+      </td>
     </tr>
   );
 }

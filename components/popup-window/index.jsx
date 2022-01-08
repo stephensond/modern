@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import popupStyles from './popup-window.module.css';
 
-export default function PopupWindow({ title, show, onClose, children }) {
+export default function PopupWindow({
+  title, show, onClose, children 
+}) {
   const [visible, setVisible] = useState(false);
 
   const closeHandler = () => {
@@ -24,7 +26,7 @@ export default function PopupWindow({ title, show, onClose, children }) {
     >
       <div className={popupStyles.popup}>
         <h2>{title}</h2>
-        <span className={popupStyles.close} onClick={closeHandler}>
+        <span role="popup" className={popupStyles.close} onClick={closeHandler} onKeyDown={closeHandler}>
           &times;
         </span>
         <div className={popupStyles.content}>{children}</div>

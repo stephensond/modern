@@ -23,14 +23,12 @@ export default function JoinLeague() {
   };
 
   useEffect(() => {
-      
     const grabLeagues = async () => {
       console.log('hi');
       const { ok, responseBody } = await httpRequest({
         method: 'GET',
         endpoint: '/grableagues',
       });
-    
       if (!ok) {
         const message = {
           message: 'Unable to connect with leagues right now',
@@ -40,47 +38,46 @@ export default function JoinLeague() {
         handleMessage(message);
         return;
       }
-    
       setapiResponse(responseBody);
-      };
+    };
 
     grabLeagues();
   }, []);
 
   return (
     <HeaderAuthed>
-        <div className={styles.container}>
-            <PopupWindow
-                title=''
-                show={popupVisible}
-                onClose={handleClose}
-            >
-                <h2>{popupMessage.message}</h2>
-                <h3>
-                    <LinkTo href={popupMessage.link}>
-                        {popupMessage.subMessage}
-                    </LinkTo>
-                </h3>
-            </PopupWindow>
-            <table className={styles.leaguesTable}>
-                <tbody>
-                    <tr>
-                        <th>League Name</th>
-                        <th>Capacity</th>
-                        <th>Owner</th>
-                        <th>Join</th>
-                    </tr>
-                    {apiResponse.map((value) => (
-                        <OpenLeague
-                            key={value.leagueid}
-                            info={value}
-                            user={user}
-                            handleMessage={handleMessage}
-                        />
-                    ))}
-                </tbody>
-            </table>
-        </div>
+      <div className={styles.container}>
+        <PopupWindow
+          title=""
+          show={popupVisible}
+          onClose={handleClose}
+        >
+          <h2>{popupMessage.message}</h2>
+          <h3>
+            <LinkTo href={popupMessage.link}>
+              {popupMessage.subMessage}
+            </LinkTo>
+          </h3>
+        </PopupWindow>
+        <table className={styles.leaguesTable}>
+          <tbody>
+            <tr>
+              <th>League Name</th>
+              <th>Capacity</th>
+              <th>Owner</th>
+              <th>Join</th>
+            </tr>
+            {apiResponse.map((value) => (
+              <OpenLeague
+                key={value.leagueid}
+                info={value}
+                user={user}
+                handleMessage={handleMessage}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </HeaderAuthed>
   );
 }
