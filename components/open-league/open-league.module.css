@@ -1,0 +1,16 @@
+.join {
+    color: black;
+    border: 2px solid black;
+    background-color: white;
+    text-align: center;
+    font-size: 15px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    border-radius: 8px;
+    outline: none;
+}
+.join:hover {
+    background-color: black;
+    color: white;
+}

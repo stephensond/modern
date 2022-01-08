@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+.leaguesTable {
+    width: 100%;
+}
+
+.leaguesTable td {
+    text-align: center;
+    height: 50px;
+    border: 1px solid black;
+    border-collapse: collapse
+}
