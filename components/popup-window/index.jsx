@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import popupStyles from "./popup-window.module.css";
-import PropTypes from "prop-types";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import popupStyles from './popup-window.module.css';
 
 export default function PopupWindow(props) {
   const [show, setShow] = useState(false);
 
-  const closeHandler = (e) => {
+  const closeHandler = () => {
     setShow(false);
     props.onClose(false);
   };
@@ -17,8 +17,8 @@ export default function PopupWindow(props) {
   return (
     <div
       style={{
-        visibility: show ? "visible" : "hidden",
-        opacity: show ? "1" : "0"
+        visibility: show ? 'visible' : 'hidden',
+        opacity: show ? '1' : '0',
       }}
       className={popupStyles.overlay}
     >
@@ -31,7 +31,7 @@ export default function PopupWindow(props) {
       </div>
     </div>
   );
-};
+}
 
 PopupWindow.propTypes = {
   title: PropTypes.string.isRequired,
