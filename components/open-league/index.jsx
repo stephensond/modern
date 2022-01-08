@@ -5,68 +5,75 @@ import styles from './open-league.module.css';
 
 export default function OpenLeague({ info, user, handleMessage }) {
   const {
-    team_ct, leagueid, max_teams, leaguename, ownerusername
-  } = info
-  const [teamCt, setTeamCt] = useState(team_ct)
+    teamct, leagueid, maxteams, leaguename, ownerusername,
+  } = info;
+  const [currTeamCt, setCurrTeamCt] = useState(teamct);
 
   const joinLeague = async () => {
     const { ok, status } = await httpRequest({
       method: 'POST',
       requestBody: JSON.stringify({ user, leagueid }),
-      endpoint: '/joinleague'
+      endpoint: '/joinleague',
     });
 
     if (!status) {
-      var message = {
+      const message = {
         message: 'Unable to connect with leagues right now',
         subMessage: 'Go Back',
-        link: '/'
-      }
+        link: '/',
+      };
+      handleMessage(message);
     }
     else if (!ok) {
-      var message = {
+      const message = {
         message: 'There was an issue joining this league',
         subMessage: 'Please try again or find another league',
-        link: '/join-league'
-      }
+        link: '/join-league',
+      };
+      handleMessage(message);
     }
     else {
-      var message = {
+      const message = {
         message: 'Succesfully joined league',
         subMessage: 'Go to league home page',
-        link: '/' // eventually this will be the custom url for the league
-      }
-      setTeamCt(teamCt + 1)
+        link: '/', // eventually this will be the custom url for the league
+      };
+      setCurrTeamCt(currTeamCt + 1)
+      handleMessage(message);
     }
 
-    handleMessage(message);
+    
   }
 
   return (
-      <tr className={'leagueRow'} id={leagueid}>
-          <td className={'league-name'}>{leaguename}</td>
-          <td className={'capacity'}>{teamCt}/{max_teams}</td>
-          <td className={'owner'}>{ownerusername}</td>
-          <td>
-              <button
-                onClick={joinLeague}
-                className={styles.join}
-                type='button'>
-                Join League
-              </button>
-          </td>
-      </tr>
-  )
-};
+    <tr className='leagueRow' id={leagueid}>
+        <td className='league-name'>{leaguename}</td>
+        <td className='capacity'>
+            {currTeamCt}
+            /
+            {maxteams}
+        </td>
+        <td className='owner'>{ownerusername}</td>
+        <td>
+            <button
+            onClick={joinLeague}
+            className={styles.join}
+            type='button'>
+            Join League
+            </button>
+        </td>
+    </tr>
+  );
+}
 
 OpenLeague.propTypes = {
   info: PropTypes.shape({
-    team_ct: PropTypes.number.isRequired,
+    teamct: PropTypes.number.isRequired,
     leagueid: PropTypes.number.isRequired,
-    max_teams: PropTypes.number.isRequired,
+    maxteams: PropTypes.number.isRequired,
     leaguename: PropTypes.string.isRequired,
     ownerusername: PropTypes.string.isRequired,
   }).isRequired,
-    user: PropTypes.string.isRequired,
-    handleMessage: PropTypes.func.isRequired,
+  user: PropTypes.string.isRequired,
+  handleMessage: PropTypes.func.isRequired,
 };

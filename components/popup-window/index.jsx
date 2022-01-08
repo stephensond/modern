@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import popupStyles from './popup-window.module.css';
 
@@ -7,12 +7,12 @@ export default function PopupWindow(props) {
 
   const closeHandler = () => {
     setShow(false);
-    props.onClose(false);
+    this.props.onClose(false);
   };
 
   useEffect(() => {
-    setShow(props.show);
-  }, [props.show]);
+    setShow(this.props.show);
+  }, [this.props.show]);
 
   return (
     <div
@@ -23,11 +23,11 @@ export default function PopupWindow(props) {
       className={popupStyles.overlay}
     >
       <div className={popupStyles.popup}>
-        <h2>{props.title}</h2>
+        <h2>{this.props.title}</h2>
         <span className={popupStyles.close} onClick={closeHandler}>
           &times;
         </span>
-        <div className={popupStyles.content}>{props.children}</div>
+        <div className={popupStyles.content}>{this.props.children}</div>
       </div>
     </div>
   );
@@ -37,4 +37,5 @@ PopupWindow.propTypes = {
   title: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
