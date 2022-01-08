@@ -10,7 +10,7 @@ import LinkTo from '../../common/linkto';
 export default function JoinLeague() {
   const { user } = useContext(UserContext);
   const [apiResponse, setapiResponse] = useState([]);
-  const [popupMessage, setPopupMessage] = useState({ subMessage: '', Link: '/' });
+  const [popupMessage, setPopupMessage] = useState({ subMessage: '', link: '/' });
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleMessage = (mess) => {
@@ -59,7 +59,7 @@ export default function JoinLeague() {
                   <h2>{popupMessage.message}</h2>
                   <h3>
                       <LinkTo href={popupMessage.link}>
-                          {popupMessage['Sub Message']}
+                          {popupMessage.subMessage}
                       </LinkTo>
                   </h3>
               </PopupWindow>
