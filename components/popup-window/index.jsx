@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import popupStyles from './popup-window.module.css';
 
 export default function PopupWindow({
-  title, show, onClose, children 
+  title, show, onClose, children,
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -26,7 +26,7 @@ export default function PopupWindow({
     >
       <div className={popupStyles.popup}>
         <h2>{title}</h2>
-        <span role="popup" className={popupStyles.close} onClick={closeHandler} onKeyDown={closeHandler}>
+        <span role="button" className={popupStyles.close} onClick={closeHandler} onKeyDown={closeHandler}>
           &times;
         </span>
         <div className={popupStyles.content}>{children}</div>
