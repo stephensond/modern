@@ -19,7 +19,6 @@ const httpRequest = async ({
       },
       body: requestBody,
     }
-    
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}${endpoint}`, requestOptions);
     const { status, ok } = response;
 
