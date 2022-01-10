@@ -43,6 +43,9 @@ export default function HeaderAuthed({ children }) {
           <LinkTo href="/create-league" className={styles['header-content']}>
             Create League
           </LinkTo>
+          <LinkTo href="/join-league" className={styles['header-content']}>
+            Join League
+          </LinkTo>
           <LinkTo href="/draft" className={styles['header-content']}>
             Draft
           </LinkTo>
