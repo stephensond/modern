@@ -11,16 +11,14 @@ function TeamRow({ team }) {
         <td>{team.teamid}</td>
         <td>{team.ownerusername}</td>
       </tr>
-    )
-  }
-  else {
-    return (
-      <tr className={styles.empty}>
-        <td>Empty</td>
-        <td>Empty</td>
-      </tr>
-    )
-  }
+    );
+  } 
+  return (
+    <tr className={styles.empty}>
+      <td>Empty</td>
+      <td>Empty</td>
+    </tr>
+  );
 }
 
 
@@ -36,9 +34,23 @@ export default function League() {
     return;
   }
 
+  const fillEmptyAndSet = (apiResponse) => {
+    setLeagueSize({
+      max: apiResponse[0].numteams,
+      current: apiResponse.length,
+    });
+
+    for (let i = 0; i < (leagueSize.max - leagueSize.current); i+1) {
+      apiResponse.push(null);
+    }
+
+    setTeams(apiResponse);
+  }
+
   useEffect(() => {
     const getTeams = async () => {
       if (!router.isReady || !router.query) {
+        setError('')
         return;
       }
 
@@ -57,41 +69,42 @@ export default function League() {
         return;
       }
 
-      setLeagueSize({
-        'max': responseBody[0].numteams,
-        'current': responseBody.length,
-      });
-
-      for (let i = 0; i < (leagueSize.max - leagueSize.current); i++) {
-        responseBody.push(null)
-        }
-      setTeams(responseBody);
+      fillEmptyAndSet(responseBody);
     };
 
     getTeams();
-  }, [router]);
+  }, [router, id]);
 
   return (
     <HeaderAuthed>
-      <h1 className={styles.title}>League {id} Home Page</h1>
-        <div className={styles.tableIntro}>Teams ({leagueSize.current}/{leagueSize.max}):</div>
-        {teams && 
-          <table className={styles.teamTable}>
-            <tr>
-              <th>TeamID</th>
-              <th>Team Owner</th>
-            </tr>
-            {teams.map((team) => (
-              <TeamRow team={team}/>
-            ))}
-          </table>
-        }
+      <h1 className={styles.title}>
+        League
+        {id}
+        Home Page
+      </h1>
+      <div className={styles.tableIntro}>Teams (
+        {leagueSize.current}
+        /
+        {leagueSize.max}
+        ):
+      </div>
+      {teams
+      && <table className={styles.teamTable}>
+          <tr>
+            <th>TeamID</th>
+            <th>Team Owner</th>
+          </tr>
+          {teams.map((team) => (
+            <TeamRow team={team}/>
+          ))}
+        </table>}
         <div>
-         <button 
+         <button
            onClick={enterDraftRoom}
            className={styles.enter}
-           type='button'
-         >Enter Draft
+           type="button"
+         >
+           Enter Draft
          </button>
         </div>
       {error && error}
