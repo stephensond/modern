@@ -34,7 +34,7 @@ export default function OpenLeague({ info, user, handleMessage }) {
       const message = {
         message: 'Succesfully joined league',
         subMessage: 'Go to league home page',
-        link: '/', // eventually this will be the custom url for the league
+        link: `/league?id=${leagueid}`, // eventually this will be the custom url for the league
       };
       setCurrTeamCt(currTeamCt + 1);
       handleMessage(message);
