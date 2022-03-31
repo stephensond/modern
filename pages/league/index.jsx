@@ -4,7 +4,7 @@ import httpRequest from '../../api';
 import HeaderAuthed from '../../common/header-authed';
 import styles from './league.module.css';
 
-function TeamRow({ team }) {
+function TeamRow({ team, buttonHandler}) {
   if (team) {
     return (
       <tr className={styles.filled}>
@@ -12,45 +12,47 @@ function TeamRow({ team }) {
         <td>{team.ownerusername}</td>
       </tr>
     );
-  } 
+  }
   return (
-    <tr className={styles.empty}>
-      <td>Empty</td>
-      <td>Empty</td>
+    <tr>
+      <td className={styles.empty}>Empty</td>
+      <td className={styles.empty}>Empty</td>
+      <button
+        onClick={buttonHandler}
+        className={styles.enter}
+        type="button"
+      >
+        Invite!
+      </button>
     </tr>
   );
 }
-
 
 export default function League() {
   const router = useRouter();
   const [teams, setTeams] = useState(null);
   const [error, setError] = useState('');
   const [leagueSize, setLeagueSize] = useState(0);
+  const [apiResponse, setApiResponse] = useState(null);
 
   const { id } = router.query;
 
   const enterDraftRoom = () => {
-    return;
+    setError('Not implemeted yet!!');
   }
 
-  const fillEmptyAndSet = (apiResponse) => {
-    setLeagueSize({
-      max: apiResponse[0].numteams,
-      current: apiResponse.length,
-    });
-
-    for (let i = 0; i < (leagueSize.max - leagueSize.current); i+1) {
-      apiResponse.push(null);
-    }
-
-    setTeams(apiResponse);
+  const Title = (id) => {
+    return(`League ${id} Home Page`)
   }
 
+  const inviteToLeague = () => {
+    setError('Not implemeted yet!!');
+  }
+  
   useEffect(() => {
     const getTeams = async () => {
       if (!router.isReady || !router.query) {
-        setError('')
+        setError('');
         return;
       }
 
@@ -69,7 +71,16 @@ export default function League() {
         return;
       }
 
-      fillEmptyAndSet(responseBody);
+      setLeagueSize({
+        max: responseBody[0].numteams,
+        current:responseBody.length
+      })
+  
+      for (let i = 0; i < (responseBody[0].numteams - responseBody.length); i + 1) {
+        responseBody.push(null);
+      }
+
+      setTeams(responseBody);
     };
 
     getTeams();
@@ -78,35 +89,38 @@ export default function League() {
   return (
     <HeaderAuthed>
       <h1 className={styles.title}>
-        League
-        {id}
-        Home Page
+        {Title(id)}
       </h1>
-      <div className={styles.tableIntro}>Teams (
+      <div className={styles.tableIntro}>
+        Teams (
         {leagueSize.current}
         /
         {leagueSize.max}
         ):
       </div>
       {teams
-      && <table className={styles.teamTable}>
-          <tr>
-            <th>TeamID</th>
-            <th>Team Owner</th>
-          </tr>
+      && (<table className={styles.teamTable}>
+        <tr>
+          <th>TeamID</th>
+          <th>Team Owner</th>
+          <th>Invite</th> {/*This should perhaps say join if not in league, else Invite*/}
+        </tr>
           {teams.map((team) => (
-            <TeamRow team={team}/>
+            <TeamRow 
+              team={team}
+              buttonHandler={inviteToLeague} 
+            />
           ))}
-        </table>}
-        <div>
-         <button
-           onClick={enterDraftRoom}
-           className={styles.enter}
-           type="button"
-         >
-           Enter Draft
-         </button>
-        </div>
+          </table>)}
+      <div>
+        <button
+          onClick={enterDraftRoom}
+          className={styles.enter}
+          type="button"
+        >
+          Enter Draft
+        </button>
+      </div>
       {error && error}
     </HeaderAuthed>
   );
