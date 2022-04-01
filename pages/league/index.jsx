@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import httpRequest from '../../api';
 import HeaderAuthed from '../../common/header-authed';
 import styles from './league.module.css';
 
-function TeamRow({ team, buttonHandler}) {
+function TeamRow({ team, buttonHandler }) {
   if (team) {
     return (
       <tr className={styles.filled}>
@@ -28,6 +29,14 @@ function TeamRow({ team, buttonHandler}) {
   );
 }
 
+TeamRow.propTypes = {
+  team: PropTypes.shape({
+    teamid: PropTypes.number.isRequired,
+    ownerusername: PropTypes.string.isRequired,
+  }).isRequired,
+  buttonHandler: PropTypes.func.isRequired,
+};
+
 export default function League() {
   const router = useRouter();
   const [teams, setTeams] = useState(null);
@@ -39,16 +48,14 @@ export default function League() {
 
   const enterDraftRoom = () => {
     setError('Not implemeted yet!!');
-  }
+  };
 
-  const Title = (id) => {
-    return(`League ${id} Home Page`)
-  }
+  const Title = () => `League ${id} Home Page`;
 
   const inviteToLeague = () => {
     setError('Not implemeted yet!!');
-  }
-  
+  };
+
   useEffect(() => {
     const getTeams = async () => {
       if (!router.isReady || !router.query) {
@@ -73,8 +80,8 @@ export default function League() {
 
       setLeagueSize({
         max: responseBody[0].numteams,
-        current:responseBody.length
-      })
+        current: responseBody.length
+      });
   
       for (let i = 0; i < (responseBody[0].numteams - responseBody.length); i + 1) {
         responseBody.push(null);
@@ -99,19 +106,21 @@ export default function League() {
         ):
       </div>
       {teams
-      && (<table className={styles.teamTable}>
+      && (
+      <table className={styles.teamTable}>
         <tr>
           <th>TeamID</th>
           <th>Team Owner</th>
-          <th>Invite</th> {/*This should perhaps say join if not in league, else Invite*/}
+          <th>Invite</th>
         </tr>
           {teams.map((team) => (
-            <TeamRow 
+            <TeamRow
               team={team}
-              buttonHandler={inviteToLeague} 
+              buttonHandler={inviteToLeague}
             />
           ))}
-          </table>)}
+      </table>
+      )}
       <div>
         <button
           onClick={enterDraftRoom}
@@ -125,3 +134,10 @@ export default function League() {
     </HeaderAuthed>
   );
 }
+
+League.propTypes = {
+  team: PropTypes.shape({
+    teamid: PropTypes.number.isRequired,
+    ownerusername: PropTypes.string.isRequired,
+  }).isRequired,
+};
