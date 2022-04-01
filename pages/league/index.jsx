@@ -42,7 +42,6 @@ export default function League() {
   const [teams, setTeams] = useState(null);
   const [error, setError] = useState('');
   const [leagueSize, setLeagueSize] = useState(0);
-  const [apiResponse, setApiResponse] = useState(null);
 
   const { id } = router.query;
 
@@ -80,9 +79,9 @@ export default function League() {
 
       setLeagueSize({
         max: responseBody[0].numteams,
-        current: responseBody.length
+        current: responseBody.length,
       });
-  
+
       for (let i = 0; i < (responseBody[0].numteams - responseBody.length); i + 1) {
         responseBody.push(null);
       }
