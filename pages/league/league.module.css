@@ -1,0 +1,42 @@
+.title {
+    text-align:center;
+}
+
+.tableIntro {
+    text-align:left;
+    font-size:2rem;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+.enter {
+    text-align: center;
+    font-size: 20px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    border-radius: 8px;
+    outline: none;
+    background-color:white;
+    color:black;
+    margin-left:10px;
+}
+
+.enter:hover {
+    background-color: black;
+    color: white;
+}
+
+.teamTable {
+    font-size:1rem;
+    margin-left:10px;
+}
+
+.empty {
+    opacity:.5;
+    font-size:12px;
+}
+
+.filled {
+    opacity:1;
+}
